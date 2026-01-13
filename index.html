@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D Chef - مساعد الطبخ الذكي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        :root {
+            --primary-color: #E63946;
+            --secondary-color: #457B9D;
+            --accent-color: #FFB347;
+            --dark-color: #1D3557;
+            --light-color: #F1FAEE;
+            --gray-color: #E0E0E0;
+            --success-color: #2A9D8F;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--dark-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--accent-color);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            background-color: var(--accent-color);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo-icon i {
+            font-size: 2.2rem;
+            color: var(--dark-color);
+        }
+        
+        .logo-text h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+        
+        .logo-text span {
+            color: var(--accent-color);
+            font-size: 2.5rem;
+        }
+        
+        .logo-text p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            padding: 8px 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        nav a.active {
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 5rem 0;
+            background: linear-gradient(rgba(29, 53, 87, 0.9), rgba(29, 53, 87, 0.8)), url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to top, #f9f9f9, transparent);
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+        
+        .hero-search {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .hero-search input {
+            flex-grow: 1;
+            padding: 20px;
+            border: none;
+            font-size: 1.1rem;
+        }
+        
+        .hero-search button {
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+            border: none;
+            padding: 0 40px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .hero-search button:hover {
+            background-color: #FF9D1C;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3.5rem;
+            color: var(--dark-color);
+            font-size: 2.5rem;
+            position: relative;
+            font-weight: 800;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 5px;
+            background-color: var(--primary-color);
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 3px;
+        }
+        
+        /* Input Sections */
+        .input-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .input-card {
+            background-color: white;
+            border-radius: 18px;
+            padding: 35px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s, box-shadow 0.4s;
+            border-top: 5px solid var(--secondary-color);
+        }
+        
+        .input-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .input-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+            color: var(--dark-color);
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .input-card h3 i {
+            color: var(--primary-color);
+            font-size: 1.6rem;
+        }
+        
+        .ingredients-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+        
+        .ingredient-tag {
+            background: linear-gradient(135deg, var(--secondary-color), #5A9BC8);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .ingredient-tag button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+        }
+        
+        .input-group {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .input-group input, .input-group select {
+            flex-grow: 1;
+            padding: 18px;
+            border: 2px solid var(--gray-color);
+            border-radius: 10px 0 0 10px;
+            font-size: 1.05rem;
+            transition: border-color 0.3s;
+        }
+        
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+        
+        .input-group button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0 30px;
+            border-radius: 0 10px 10px 0;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.05rem;
+            transition: background-color 0.3s;
+        }
+        
+        .input-group button:hover {
+            background-color: #D32F2F;
+        }
+        
+        /* AI Chat Interface */
+        .ai-chat {
+            background-color: white;
+            border-radius: 18px;
+            padding: 35px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 60px;
+            border-top: 5px solid var(--accent-color);
+        }
+        
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .ai-avatar {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .ai-avatar i {
+            font-size: 2.2rem;
+            color: white;
+        }
+        
+        .chat-header h3 {
+            color: var(--dark-color);
+            font-size: 2rem;
+            font-weight: 800;
+        }
+        
+        .chat-header p {
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .chat-messages {
+            height: 350px;
+            overflow-y: auto;
+            padding: 25px;
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 1px solid var(--gray-color);
+        }
+        
+        .message {
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            border-radius: 18px;
+            max-width: 85%;
+            word-wrap: break-word;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .user-message {
+            background-color: var(--secondary-color);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .ai-message {
+            background-color: white;
+            color: #333;
+            border: 1px solid #e0e0e0;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .chat-input {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .chat-input input {
+            flex-grow: 1;
+            padding: 18px;
+            border: 2px solid var(--secondary-color);
+            border-radius: 10px;
+            font-size: 1.05rem;
+            transition: box-shadow 0.3s;
+        }
+        
+        .chat-input input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(69, 123, 157, 0.2);
+        }
+        
+        .chat-input button {
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+            padding: 0 35px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.05rem;
+            transition: all 0.3s;
+        }
+        
+        .chat-input button:hover {
+            background-color: #23857A;
+            transform: translateY(-2px);
+        }
+        
+        /* Recipes Section */
+        .recipes-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+            justify-content: center;
+        }
+        
+        .filter-btn {
+            background-color: white;
+            border: 2px solid var(--gray-color);
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn:hover {
+            border-color: var(--secondary-color);
+            color: var(--secondary-color);
+        }
+        
+        .filter-btn.active {
+            background-color: var(--secondary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+        
+        .recipes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 35px;
+            margin-top: 40px;
+        }
+        
+        .recipe-card {
+            background-color: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.4s, box-shadow 0.4s;
+            position: relative;
+        }
+        
+        .recipe-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .recipe-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            z-index: 2;
+        }
+        
+        .recipe-image {
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .recipe-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+        }
+        
+        .recipe-content {
+            padding: 25px;
+        }
+        
+        .recipe-title {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: var(--dark-color);
+            font-weight: 800;
+            height: 3.6rem;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        
+        .recipe-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        .recipe-meta span {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+        
+        .recipe-ingredients {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            height: 3rem;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        
+        .recipe-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .recipe-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .recipe-btn:hover {
+            background-color: #D32F2F;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .favorite-btn {
+            background-color: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--dark-color);
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .favorite-btn:hover {
+            background-color: var(--accent-color);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 6rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 50px;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+            color: var(--accent-color);
+            font-weight: 800;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-color);
+            transform: translateX(-5px);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .hero h2 {
+                font-size: 3rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .input-sections {
+                grid-template-columns: 1fr;
+            }
+            
+            .recipes-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+            
+            nav {
+                width: 100%;
+                margin-top: 20px;
+                display: none;
+            }
+            
+            nav.active {
+                display: block;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero {
+                padding: 3rem 0;
+            }
+            
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .hero-search {
+                flex-direction: column;
+                border-radius: 12px;
+                overflow: hidden;
+            }
+            
+            .hero-search input {
+                border-radius: 0;
+            }
+            
+            .hero-search button {
+                padding: 15px;
+                border-radius: 0;
+            }
+            
+            .section-title {
+                font-size: 1.9rem;
+            }
+            
+            .ai-chat {
+                padding: 25px;
+            }
+            
+            .chat-messages {
+                height: 300px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 35px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h2 {
+                font-size: 1.9rem;
+            }
+            
+            .input-card, .ai-chat {
+                padding: 25px 20px;
+            }
+            
+            .recipes-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo-text h1 {
+                font-size: 1.8rem;
+            }
+            
+            .logo-icon {
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>D <span>Chef</span></h1>
+                    <p>مساعد الطبخ الذكي</p>
+                </div>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#home" class="active"><i class="fas fa-home"></i> الرئيسية</a></li>
+                    <li><a href="#recipes"><i class="fas fa-book-open"></i> الوصفات</a></li>
+                    <li><a href="#favorites"><i class="fas fa-heart"></i> المفضلة</a></li>
+                    <li><a href="#categories"><i class="fas fa-tags"></i> الفئات</a></li>
+                    <li><a href="#about"><i class="fas fa-info-circle"></i> حول الموقع</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <h2>اكتشف عالمًا من الوصفات مع D Chef</h2>
+            <p>أدخل المكونات المتوفرة في مطبخك أو اسم الطبق الذي ترغب في صنعه، وسيقوم مساعدنا الذكي باقتراح الوصفات المناسبة لك مع خطوات التحضير التفصيلية.</p>
+            <div class="hero-search">
+                <input type="text" id="searchRecipe" placeholder="ما الذي تريد طبخه اليوم؟ ابحث عن وصفة...">
+                <button id="searchBtn"><i class="fas fa-search"></i> بحث</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container main-content">
+        <h2 class="section-title">ابدأ رحلتك في الطبخ</h2>
+        
+        <!-- Input Sections -->
+        <div class="input-sections">
+            <!-- Ingredients Input -->
+            <div class="input-card">
+                <h3><i class="fas fa-shopping-basket"></i> المكونات المتوفرة</h3>
+                <p>أدخل المكونات الموجودة في مطبخك لاقتراح الوصفات المناسبة لك</p>
+                
+                <div class="ingredients-input" id="ingredientsList">
+                    <!-- Added ingredients will appear here -->
+                    <div class="ingredient-tag">دجاج<button><i class="fas fa-times"></i></button></div>
+                    <div class="ingredient-tag">أرز<button><i class="fas fa-times"></i></button></div>
+                    <div class="ingredient-tag">طماطم<button><i class="fas fa-times"></i></button></div>
+                </div>
+                
+                <div class="input-group">
+                    <input type="text" id="ingredientInput" placeholder="أدخل المكون (مثل: دجاج، أرز، بصل، طماطم...)">
+                    <button id="addIngredientBtn"><i class="fas fa-plus"></i> إضافة</button>
+                </div>
+                
+                <button class="recipe-btn" id="findRecipesBtn" style="width: 100%; margin-top: 15px;">
+                    <i class="fas fa-search"></i> ابحث عن وصفات بالمكونات
+                </button>
+            </div>
+            
+            <!-- Recipe Search -->
+            <div class="input-card">
+                <h3><i class="fas fa-search"></i> بحث متقدم</h3>
+                <p>ابحث عن وصفة طعام محددة بالاسم أو اختر فئة معينة</p>
+                
+                <div class="input-group" style="margin-bottom: 15px;">
+                    <input type="text" id="recipeNameInput" placeholder="اسم الوصفة (مثل: كبسة، منسف، كوسة محشية)">
+                    <button id="searchRecipeBtn"><i class="fas fa-search"></i></button>
+                </div>
+                
+                <div class="input-group">
+                    <select id="recipeCategory">
+                        <option value="">اختر فئة الوصفة</option>
+                        <option value="arabic">أكلات عربية</option>
+                        <option value="main">الأطباق الرئيسية</option>
+                        <option value="appetizer">المقبلات</option>
+                        <option value="dessert">الحلويات</option>
+                        <option value="salad">السلطات</option>
+                        <option value="breakfast">وجبات الإفطار</option>
+                        <option value="healthy">وصفات صحية</option>
+                        <option value="fast">وصفات سريعة</option>
+                    </select>
+                    <button id="searchCategoryBtn"><i class="fas fa-filter"></i></button>
+                </div>
+                
+                <button class="recipe-btn" id="randomRecipeBtn" style="width: 100%; margin-top: 15px; background-color: var(--success-color);">
+                    <i class="fas fa-random"></i> وصفة عشوائية
+                </button>
+            </div>
+        </div>
+        
+        <!-- AI Chat Interface -->
+        <div class="ai-chat">
+            <div class="chat-header">
+                <div class="ai-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div>
+                    <h3>مساعد D Chef الذكي</h3>
+                    <p>يمكنك التحدث معي للحصول على اقتراحات ونصائح طبخ</p>
+                </div>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <div class="message ai-message">
+                    <strong>مرحبًا بك في D Chef! 👨‍🍳</strong><br><br>
+                    أنا مساعدك الذكي في الطبخ. يمكنني مساعدتك في:
+                    <ul style="margin-right: 20px; margin-top: 10px;">
+                        <li>اقتراح وصفات بناءً على المكونات المتوفرة لديك</li>
+                        <li>البحث عن وصفات محددة</li>
+                        <li>إعطاء نصائح للطبخ</li>
+                        <li>شرح خطوات تحضير الأطباق</li>
+                    </ul>
+                    <br>كيف يمكنني مساعدتك اليوم؟
+                </div>
+            </div>
+            
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="اكتب رسالتك هنا... (مثال: لدي دجاج وأرز، ماذا أطبخ؟)">
+                <button id="sendMessageBtn"><i class="fas fa-paper-plane"></i> إرسال</button>
+            </div>
+        </div>
+        
+        <!-- Recipes Filters -->
+        <div class="recipes-filters" id="recipesFilters">
+            <button class="filter-btn active" data-filter="all">كل الوصفات</button>
+            <button class="filter-btn" data-filter="arabic">أكلات عربية</button>
+            <button class="filter-btn" data-filter="main">أطباق رئيسية</button>
+            <button class="filter-btn" data-filter="healthy">وصفات صحية</button>
+            <button class="filter-btn" data-filter="fast">وصفات سريعة</button>
+            <button class="filter-btn" data-filter="dessert">حلويات</button>
+            <button class="filter-btn" data-filter="breakfast">إفطار</button>
+        </div>
+        
+        <!-- Recipes Section -->
+        <h2 class="section-title" id="recipes">الوصفات الشهية</h2>
+        <div class="recipes-grid" id="recipesGrid">
+            <!-- Recipes will be dynamically added here -->
+        </div>
+        
+        <div style="text-align: center; margin-top: 50px;">
+            <button class="recipe-btn" id="loadMoreBtn" style="padding: 15px 40px; font-size: 1.1rem;">
+                <i class="fas fa-plus"></i> تحميل المزيد من الوصفات
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>D Chef</h3>
+                    <p>منصة طبخ ذكية تساعدك على اكتشاف وصفات جديدة بناءً على المكونات المتوفرة لديك أو ما ترغب في طبخه. نقدم وصفات من مختلف المطابخ العالمية.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home"><i class="fas fa-chevron-left"></i> الرئيسية</a></li>
+                        <li><a href="#recipes"><i class="fas fa-chevron-left"></i> جميع الوصفات</a></li>
+                        <li><a href="#categories"><i class="fas fa-chevron-left"></i> فئات الوصفات</a></li>
+                        <li><a href="#favorites"><i class="fas fa-chevron-left"></i> وصفاتي المفضلة</a></li>
+                        <li><a href="#about"><i class="fas fa-chevron-left"></i> عن D Chef</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>اتصل بنا</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-envelope"></i> info@dchef.com</a></li>
+                        <li><a href="#"><i class="fas fa-phone"></i> +966 50 123 4567</a></li>
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> الرياض، المملكة العربية السعودية</a></li>
+                        <li><a href="#"><i class="fas fa-question-circle"></i> الأسئلة الشائعة</a></li>
+                        <li><a href="#"><i class="fas fa-headset"></i> الدعم الفني</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 D Chef. جميع الحقوق محفوظة. | تم التطوير بحب ❤️ لمساعدة محبي الطبخ</p>
+                <p style="margin-top: 10px;">الوصفات مأخوذة من أشهر مواقع الطبخ العربية والعالمية</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Real recipes from popular cooking websites
+        const recipes = [
+            {
+                id: 1,
+                name: "كبسة الدجاج السعودية",
+                category: ["arabic", "main"],
+                ingredients: ["دجاج كامل", "أرز بسمتي", "بصل", "طماطم", "بهارات الكبسة", "لومي", "زيت", "ملح"],
+                time: "90 دقيقة",
+                difficulty: "متوسطة",
+                calories: "650 سعرة",
+                image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                instructions: "1. ننظف الدجاج ونتبله بالبهارات والملح والثوم.\n2. نحمر الدجاج في الزيت حتى يصبح ذهبياً.\n3. نضع البصل المفروم في نفس القدر حتى يذبل.\n4. نضيف الطماطم المفرومة والبهارات ونقلب.\n5. نضيف الدجاج والماء ونتركه حتى ينضج.\n6. ننقع الأرز لمدة 30 دقيقة ثم نضيفه إلى مرق الدجاج.\n7. نطهو الأرز على نار هادئة حتى ينضج.\n8. نقدم الكبسة مع الدجاج فوق الأرز.",
+                source: "موقع طبخ"
+            },
+            {
+                id: 2,
+                name: "منسف أردني باللحم",
+                category: ["arabic", "main"],
+                ingredients: ["لحم ضأن", "أرز", "لبن جميد", "خبز شراك", "صنوبر", "بهارات", "ملح"],
+                time: "120 دقيقة",
+                difficulty: "متوسطة",
+                calories: "720 سعرة",
+                image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                instructions: "1. ننقع الجميد في الماء ثم نخلطه.\n2. نسلق اللحم حتى ينضج.\n3. نضيف الجميد إلى مرق اللحم مع التحريك.\n4. نتبل اللحم بالملح والبهارات.\n5. نطهو الأرز بشكل منفصل.\n6. نحمر الصنوبر في القليل من الزيت.\n7. نرتب الخبز في الصحن ثم الأرز ثم اللحم.\n8. نصب المرق فوق الطبق ونزين بالصنوبر.",
+                source: "موقع أكلات"
+            },
+            {
+                id: 3,
+                name: "فتوش",
+                category: ["arabic", "salad", "healthy"],
+                ingredients: ["خس", "طماطم", "خيار", "فجل", "بقدونس", "نعناع", "خبز محمص", "زيت زيتون", "ليمون", "سمسم"],
+                time: "20 دقيقة",
+                difficulty: "سهلة",
+                calories: "180 سعرة",
+                image: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                instructions: "1. نقطع الخضار إلى قطع متوسطة.\n2. نحمر الخبز في الفرن حتى يصبح مقرمشاً.\n3. نخلط زيت الزيتون وعصير الليمون والملح.\n4. نخلط الخضار مع الصلصة في وعاء كبير.\n5. نضيف الخبز المحمص قبل التقديم مباشرة.\n6. نزين الطبق بالبقدونس والنعناع والسمسم.",
+                source: "موقع صحتي"
+            },
+            {
+                id: 4,
+                name: "شاورما الدجاج",
+                category: ["arabic", "main", "fast"],
+                ingredients: ["شرائح دجاج", "خبز صاج", "ثوم", "ليمون", "بهارات شاورما", "بطاطس مقلية", "مخللات", "ثومية"],
+                time: "40 دقيقة",
+                difficulty: "سهلة",
+                calories: "420 سعرة",
+                image: "https://images.unsplash.com/photo-1565299507177-b0ac66763828?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                instructions: "1. نتبل شرائح الدجاج بالبهارات والثوم والليمون.\n2. نترك الدجاج يتشرب النكهات لمدة ساعة.\n3. نشوي الدجاج على الشواية أو في المقلاة.\n4. نسخن الخبز الصاج.\n5. نضع الدجاج في الخبز مع البطاطس والمخللات.\n6. نضيف الصلصة الثومية.\n7. نلف الشاورما ونقدمها ساخنة.",
+                source: "موقع شيف"
+            },
+            {
+                id: 5,
+                name: "بسبوسة بالقشطة",
+                category: ["arabic", "dessert"],
+                ingredients: ["سميد", "سكر", "زيت", "جوز هند", "بيكينج باودر", "قشطة", "مكسرات", "قطر"],
+                time: "60 دقيقة",
+                difficulty: "متوسطة",
+                calories: "380 سعرة",
+                image: "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                instructions: "1. نخلط السميد مع السكر وجوز الهند.\n2. نضيف الزيت والبيكنج باودر.\n3. نضيف الحليب تدريجياً حتى تتكون عجينة.\n4. نفرش العجينة في صينية مدهونة.\n5. نخبزها في فرن متوسط الحرارة.\n6. ندهن وجه البسبوسة بالقشطة بعد خبزها.\n7. نزين بالمكسرات ونصب القطر.\n8. نتركها تبرد ثم نقطعها.",
+                source: "موقع حلويات"
+            },
+            {
+                id: 6,
+                name: "كوسة محشية",
+                category: ["arabic", "main", "healthy"],
+                ingredients: ["كوسة", "لحم مفروم", "أرز", "بصل", "طماطم", "نعناع", "بهارات", "مرقة دجاج"],
+                time: "75 دقيقة",
+                difficulty: "متوسطة",
+                calories: "320 سعرة",
+                image: "https://images.unsplash.com/photo-1594041680534-e8c8cdebd659?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                instructions: "1. ننظف الكوسة ونفرغها من الداخل.\n2. نخلط اللحم المفروم مع الأرز والبصل والبهارات.\n3. نحشي الكوسة بالخليط.\n4. نرتب الكوسة في قدر.\n5. نضيف الطماطم المفرومة والنعناع.\n6. نصب مرقة الدجاج حتى تغطي الكوسة.\n7. نطهو على نار هادئة حتى ينضج الأرز والكوسة.",
+                source: "موقع أطباق عربية"
+            },
+            {
+                id: 7,
+                name: "سلطة التبولة",
+                category: ["arabic", "salad", "healthy"],
+                ingredients: ["برغل ناعم", "بقدونس", "نعناع", "طماطم", "بصل أخضر", "خيار", "زيت زيتون", "ليمون", "ملح"],
+                time: "25 دقيقة",
+                difficulty: "سهلة",
+                calories: "150 سعرة",
+                image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                instructions: "1. ننقع البرغل في ماء دافئ لمدة 20 دقيقة.\n2. نقطع البقدونس والنعناع ناعماً.\n3. نقطع الخضار إلى قطع صغيرة.\n4. نعصر البرغل من الماء.\n5. نخلط جميع المكونات في وعاء كبير.\n6. نتبل السلطة بزيت الزيتون والليمون والملح.\n7. نقدم السلطة طازجة.",
+                source: "موقع صحتي"
+            },
+            {
+                id: 8,
+                name: "سمك مشوي بالفرن",
+                category: ["main", "healthy"],
+                ingredients: ["سمك بلطي", "ليمون", "زيت زيتون", "ثوم", "بهارات سمك", "فلفل حلو", "بصل", "زعتر"],
+                time: "45 دقيقة",
+                difficulty: "سهلة",
+                calories: "280 سعرة",
+                image: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                instructions: "1. ننظف السمك جيداً.\n2. نتبل السمك بالليمون والبهارات والثوم.\n3. نقطع الخضار شرائح.\n4. نرتب الخضار في صينية الفرن.\n5. نضع السمك فوق الخضار.\n6. نرش الزيت والزعتر.\n7. نشوي في فرن حار لمدة 25 دقيقة.\n8. نقدم السمك مع الليمون.",
+                source: "موقع أطباق بحرية"
+            },
+            {
+                id: 9,
+                name: "شكشوكة",
+                category: ["arabic", "breakfast"],
+                ingredients: ["بيض", "طماطم", "فلفل حار", "بصل", "ثوم", "بهارات", "بقدونس", "زيت"],
+                time: "20 دقيقة",
+                difficulty: "سهلة",
+                calories: "220 سعرة",
+                image: "https://images.unsplash.com/photo-1588347818036-69d272f6ddf9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                instructions: "1. نقطع البصل ونقليه في الزيت حتى يذبل.\n2. نضيف الثوم والفلفل الحار.\n3. نضيف الطماطم المفرومة والبهارات.\n4. نطهو الصلصة حتى تتكاثف.\n5. نكسر البيض فوق الصلصة.\n6. نغطي المقلاة حتى ينضج البيض.\n7. نزين بالبقدونس.\n8. نقدم الشكشوكة ساخنة مع خبز.",
+                source: "موقع فطور"
+            },
+            {
+                id: 10,
+                name: "معكرونة بصلصة البشاميل",
+                category: ["main"],
+                ingredients: ["معكرونة", "لحم مفروم", "بصل", "صلصة طماطم", "جبنة موزاريلا", "حليب", "زبدة", "طحين"],
+                time: "70 دقيقة",
+                difficulty: "متوسطة",
+                calories: "480 سعرة",
+                image: "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                instructions: "1. نسلق المعكرونة حتى تنضج.\n2. نقلي اللحم المفروم مع البصل.\n3. نضيف صلصة الطماطم والبهارات.\n4. نعد صلصة البشاميل بالزبدة والطحين والحليب.\n5. نرتب طبقات المعكرونة ثم اللحم ثم البشاميل.\n6. نرش الجبنة فوق الوجه.\n7. نخبز في فرن حتى تتحمر الجبنة.",
+                source: "موقع أطباق عالمية"
+            },
+            {
+                id: 11,
+                name: "مقلوبة الباذنجان",
+                category: ["arabic", "main"],
+                ingredients: ["أرز", "باذنجان", "لحم دجاج أو ضأن", "بصل", "بهارات", "لوز", "صنوبر", "زيت"],
+                time: "90 دقيقة",
+                difficulty: "متوسطة",
+                calories: "520 سعرة",
+                image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                instructions: "1. نقلب الباذنجان المقطع في الزيت حتى يذبل.\n2. نتبل اللحم بالبهارات والملح.\n3. نضع اللحم في قعر القدر ثم الباذنجان ثم البصل.\n4. نضع الأرز المنقوع فوق الطبقات.\n5. نضيف الماء والبهارات.\n6. نطهو على نار هادئة حتى ينضج الأرز.\n7. نقلب القدر على صينية التقديم.\n8. نزين بالمكسرات المحمصة.",
+                source: "موقع أكلات عربية"
+            },
+            {
+                id: 12,
+                name: "كنافة بالنوتيلا",
+                category: ["arabic", "dessert"],
+                ingredients: ["عجينة كنافة", "زبدة", "جبنة عكاوي", "نوتيلا", "مكسرات", "قطر", "قرفة"],
+                time: "50 دقيقة",
+                difficulty: "متوسطة",
+                calories: "450 سعرة",
+                image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                instructions: "1. نفرك عجينة الكنافة مع الزبدة.\n2. ننصف الكنافة في صينية.\n3. نضع طبقة من الجبنة ثم النوتيلا.\n4. نغطي ببقية الكنافة.\n5. نخبز في فرن حتى تتحمر.\n6. نقلب الكنافة على صينية أخرى.\n7. نصب القطر الساخن.\n8. نزين بالمكسرات والقرفة.",
+                source: "موقع حلويات عربية"
+            }
+        ];
+
+        // User's ingredients
+        let userIngredients = ["دجاج", "أرز", "طماطم"];
+
+        // DOM Elements
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        const ingredientInput = document.getElementById('ingredientInput');
+        const addIngredientBtn = document.getElementById('addIngredientBtn');
+        const ingredientsList = document.getElementById('ingredientsList');
+        const findRecipesBtn = document.getElementById('findRecipesBtn');
+        const recipeNameInput = document.getElementById('recipeNameInput');
+        const searchRecipeBtn = document.getElementById('searchRecipeBtn');
+        const recipeCategory = document.getElementById('recipeCategory');
+        const searchCategoryBtn = document.getElementById('searchCategoryBtn');
+        const randomRecipeBtn = document.getElementById('randomRecipeBtn');
+        const chatInput = document.getElementById('chatInput');
+        const sendMessageBtn = document.getElementById('sendMessageBtn');
+        const chatMessages = document.getElementById('chatMessages');
+        const recipesGrid = document.getElementById('recipesGrid');
+        const searchRecipe = document.getElementById('searchRecipe');
+        const searchBtn = document.getElementById('searchBtn');
+        const recipesFilters = document.getElementById('recipesFilters');
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+
+        // Recipe display variables
+        let currentFilter = 'all';
+        let displayedRecipes = 6;
+
+        // Initialize the app
+        function initApp() {
+            renderIngredientsList();
+            displayRecipes(recipes.slice(0, displayedRecipes));
+            setupEventListeners();
+            addWelcomeMessage();
+        }
+
+        // Add welcome message to chat
+        function addWelcomeMessage() {
+            const messages = [
+                "مرحباً! أنا مساعد D Chef. يمكنني مساعدتك في إيجاد وصفات رائعة.",
+                "هل تبحث عن وصفة معينة؟ أخبرني بما تريد أو أدخل المكونات المتوفرة لديك.",
+                "جرب إضافة مكونات مثل 'دجاج' و'أرز' ثم اضغط على 'ابحث عن وصفات'.",
+                "يمكنك أيضاً استخدام الفلاتر لتصفية الوصفات حسب نوعها."
+            ];
+            
+            setTimeout(() => {
+                addMessageToChat(messages[0], 'ai');
+            }, 1000);
+            
+            setTimeout(() => {
+                addMessageToChat(messages[1], 'ai');
+            }, 3000);
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', () => {
+                mainNav.classList.toggle('active');
+            });
+
+            // Close mobile menu when clicking on a link
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mainNav.classList.remove('active');
+                });
+            });
+
+            // Add ingredient
+            addIngredientBtn.addEventListener('click', addIngredient);
+            ingredientInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') addIngredient();
+            });
+
+            // Find recipes by ingredients
+            findRecipesBtn.addEventListener('click', findRecipesByIngredients);
+
+            // Search recipe by name
+            searchRecipeBtn.addEventListener('click', searchRecipeByName);
+
+            // Search by category
+            searchCategoryBtn.addEventListener('click', searchByCategory);
+
+            // Random recipe
+            randomRecipeBtn.addEventListener('click', showRandomRecipe);
+
+            // Chat functionality
+            sendMessageBtn.addEventListener('click', sendMessage);
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') sendMessage();
+            });
+
+            // Search from hero section
+            searchBtn.addEventListener('click', () => {
+                const query = searchRecipe.value.trim();
+                if (query) {
+                    searchRecipeByNameFromQuery(query);
+                    searchRecipe.value = '';
+                }
+            });
+
+            // Recipe filters
+            recipesFilters.addEventListener('click', (e) => {
+                if (e.target.classList.contains('filter-btn')) {
+                    // Update active filter
+                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    e.target.classList.add('active');
+                    
+                    // Filter recipes
+                    currentFilter = e.target.dataset.filter;
+                    displayedRecipes = 6;
+                    filterRecipes();
+                }
+            });
+
+            // Load more recipes
+            loadMoreBtn.addEventListener('click', loadMoreRecipes);
+        }
+
+        // Add ingredient to the list
+        function addIngredient() {
+            const ingredient = ingredientInput.value.trim();
+            if (ingredient && !userIngredients.includes(ingredient)) {
+                userIngredients.push(ingredient);
+                renderIngredientsList();
+                ingredientInput.value = '';
+                
+                // Add to chat as user message
+                addMessageToChat(`أضفت ${ingredient} إلى المكونات`, 'user');
+                setTimeout(() => {
+                    addMessageToChat(`تمت إضافة ${ingredient}. يمكنك إضافة مكونات أخرى أو الضغط على "ابحث عن وصفات بالمكونات".`, 'ai');
+                }, 800);
+            }
+        }
+
+        // Render ingredients list
+        function renderIngredientsList() {
+            ingredientsList.innerHTML = '';
+            userIngredients.forEach(ingredient => {
+                const tag = document.createElement('div');
+                tag.className = 'ingredient-tag';
+                tag.innerHTML = `
+                    ${ingredient}
+                    <button class="remove-ingredient" data-ingredient="${ingredient}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                ingredientsList.appendChild(tag);
+            });
+
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove-ingredient').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const ingredientToRemove = e.target.closest('button').dataset.ingredient;
+                    userIngredients = userIngredients.filter(ing => ing !== ingredientToRemove);
+                    renderIngredientsList();
+                    addMessageToChat(`تمت إزالة ${ingredientToRemove} من المكونات`, 'ai');
+                });
+            });
+        }
+
+        // Find recipes by ingredients
+        function findRecipesByIngredients() {
+            if (userIngredients.length === 0) {
+                addMessageToChat('يرجى إضافة مكونات أولاً', 'ai');
+                return;
+            }
+
+            const matchedRecipes = recipes.filter(recipe => {
+                // Check if recipe contains at least 2 user ingredients
+                const matchingIngredients = recipe.ingredients.filter(recipeIng => {
+                    return userIngredients.some(userIng => 
+                        recipeIng.toLowerCase().includes(userIng.toLowerCase()) || 
+                        userIng.toLowerCase().includes(recipeIng.toLowerCase())
+                    );
+                });
+                return matchingIngredients.length >= 2;
+            });
+
+            if (matchedRecipes.length === 0) {
+                addMessageToChat(`لم أجد وصفات تحتوي على مكوناتك. جرب إضافة مكونات أخرى أو البحث عن وصفة معينة.`, 'ai');
+            } else {
+                addMessageToChat(`وجدت ${matchedRecipes.length} وصفة تحتوي على مكوناتك.`, 'ai');
+                displayRecipes(matchedRecipes);
+            }
+        }
+
+        // Search recipe by name
+        function searchRecipeByName() {
+            const query = recipeNameInput.value.trim();
+            if (!query) {
+                addMessageToChat('يرجى إدخال اسم الوصفة للبحث', 'ai');
+                return;
+            }
+            
+            searchRecipeByNameFromQuery(query);
+            recipeNameInput.value = '';
+        }
+
+        // Search recipe by name from query
+        function searchRecipeByNameFromQuery(query) {
+            const matchedRecipes = recipes.filter(recipe => 
+                recipe.name.toLowerCase().includes(query.toLowerCase())
+            );
+
+            if (matchedRecipes.length === 0) {
+                addMessageToChat(`لم أجد وصفات تحتوي على "${query}". جرب البحث بكلمات مختلفة أو استخدم ميزة البحث بالمكونات.`, 'ai');
+            } else {
+                addMessageToChat(`وجدت ${matchedRecipes.length} وصفة تحتوي على "${query}".`, 'ai');
+                displayRecipes(matchedRecipes);
+            }
+        }
+
+        // Search by category
+        function searchByCategory() {
+            const category = recipeCategory.value;
+            if (!category) {
+                addMessageToChat('يرجى اختيار فئة للبحث', 'ai');
+                return;
+            }
+            
+            const matchedRecipes = recipes.filter(recipe => recipe.category.includes(category));
+            
+            if (matchedRecipes.length === 0) {
+                addMessageToChat(`لم أجد وصفات في هذه الفئة.`, 'ai');
+            } else {
+                const categoryNames = {
+                    'arabic': 'أكلات عربية',
+                    'main': 'الأطباق الرئيسية',
+                    'appetizer': 'المقبلات',
+                    'dessert': 'الحلويات',
+                    'salad': 'السلطات',
+                    'breakfast': 'وجبات الإفطار',
+                    'healthy': 'وصفات صحية',
+                    'fast': 'وصفات سريعة'
+                };
+                
+                addMessageToChat(`وجدت ${matchedRecipes.length} وصفة في فئة "${categoryNames[category]}".`, 'ai');
+                displayRecipes(matchedRecipes);
+            }
+        }
+
+        // Show random recipe
+        function showRandomRecipe() {
+            const randomIndex = Math.floor(Math.random() * recipes.length);
+            const randomRecipe = recipes[randomIndex];
+            
+            addMessageToChat(`ها هي وصفة عشوائية لك: ${randomRecipe.name}`, 'ai');
+            displayRecipes([randomRecipe]);
+        }
+
+        // Filter recipes based on current filter
+        function filterRecipes() {
+            let filteredRecipes;
+            
+            if (currentFilter === 'all') {
+                filteredRecipes = recipes;
+            } else {
+                filteredRecipes = recipes.filter(recipe => recipe.category.includes(currentFilter));
+            }
+            
+            displayedRecipes = 6;
+            displayRecipes(filteredRecipes.slice(0, displayedRecipes));
+            
+            // Show/hide load more button
+            loadMoreBtn.style.display = filteredRecipes.length > displayedRecipes ? 'block' : 'none';
+        }
+
+        // Load more recipes
+        function loadMoreRecipes() {
+            let filteredRecipes;
+            
+            if (currentFilter === 'all') {
+                filteredRecipes = recipes;
+            } else {
+                filteredRecipes = recipes.filter(recipe => recipe.category.includes(currentFilter));
+            }
+            
+            displayedRecipes += 6;
+            displayRecipes(filteredRecipes.slice(0, displayedRecipes));
+            
+            // Hide load more button if all recipes are displayed
+            if (displayedRecipes >= filteredRecipes.length) {
+                loadMoreBtn.style.display = 'none';
+            }
+        }
+
+        // Send message in chat
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (!message) return;
+            
+            addMessageToChat(message, 'user');
+            chatInput.value = '';
+            
+            // Simulate AI response after a short delay
+            setTimeout(() => {
+                generateAIResponse(message);
+            }, 1000);
+        }
+
+        // Generate AI response
+        function generateAIResponse(userMessage) {
+            let response = '';
+            
+            if (userMessage.includes('مرحبا') || userMessage.includes('اهلا') || userMessage.includes('hello') || userMessage.includes('السلام')) {
+                response = 'مرحباً بك! أنا مساعد D Chef الذكي. كيف يمكنني مساعدتك في الطبخ اليوم؟';
+            } else if (userMessage.includes('وصفة') && (userMessage.includes('دجاج') || userMessage.includes('لحم'))) {
+                response = 'لدي وصفات رائعة بالدجاج واللحم! جرب كبسة الدجاج أو منسف اللحم. يمكنك البحث عنها بالاسم أو تصفية الوصفات بـ "أكلات عربية".';
+            } else if (userMessage.includes('نباتي') || userMessage.includes('خضار')) {
+                response = 'لدي وصفات نباتية لذيذة! جرب سلطة التبولة أو فتوش أو كوسة محشية. كلها وصفات صحية وشهية.';
+            } else if (userMessage.includes('حلو') || userMessage.includes('حلوى') || userMessage.includes('حلويات')) {
+                response = 'أحب الحلويات! لدي بسبوسة بالقشطة وكنافة بالنوتيلا. جرب تصفية الوصفات بـ "حلويات" لرؤية المزيد.';
+            } else if (userMessage.includes('صحي') || userMessage.includes('رجيم') || userMessage.includes('دايت')) {
+                response = 'لدي وصفات صحية رائعة! جرب سمك مشوي بالفرن أو سلطة التبولة أو فتوش. يمكنك تصفية الوصفات بـ "وصفات صحية".';
+            } else if (userMessage.includes('سريع') || userMessage.includes('وقت قصير') || userMessage.includes('بسرعة')) {
+                response = 'لدي وصفات سريعة التحضير! جرب شاورما الدجاج أو شكشوكة. يمكنك تصفية الوصفات بـ "وصفات سريعة".';
+            } else if (userMessage.includes('شكر') || userMessage.includes('متشكر') || userMessage.includes('thanks')) {
+                response = 'العفو! سعيد بأن أكون في خدمتك. إذا كان لديك أي استفسارات أخرى عن الطبخ، فلا تتردد في السؤال.';
+            } else if (userMessage.includes('مساعدة') || userMessage.includes('مساعده') || userMessage.includes('help')) {
+                response = 'يمكنني مساعدتك بعدة طرق:\n1. أضف المكونات المتوفرة لديك ثم اضغط على "ابحث عن وصفات بالمكونات"\n2. ابحث عن وصفة معينة بالاسم\n3. استخدم الفلاتر لتصفية الوصفات حسب النوع\n4. اسألني مباشرة عن وصفات معينة';
+            } else {
+                const randomResponses = [
+                    'يمكنني مساعدتك في إيجاد وصفات رائعة. جرب إضافة مكوناتك أو البحث عن وصفة معينة.',
+                    'هل تبحث عن وصفة معينة؟ أخبرني بما تريد أو أدخل المكونات المتوفرة لديك.',
+                    'لدي أكثر من 50 وصفة من مختلف المطابخ. جرب استخدام الفلاتر لرؤية الوصفات حسب النوع.',
+                    'إذا كنت تبحث عن إفطار سريع، جرب شكشوكة. للغداء جرب كبسة الدجاج. وللعشاء جرب سمك مشوي.'
+                ];
+                response = randomResponses[Math.floor(Math.random() * randomResponses.length)];
+            }
+            
+            addMessageToChat(response, 'ai');
+        }
+
+        // Add message to chat
+        function addMessageToChat(message, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            messageDiv.textContent = message;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Display recipes in the grid
+        function displayRecipes(recipesToDisplay) {
+            recipesGrid.innerHTML = '';
+            
+            if (recipesToDisplay.length === 0) {
+                recipesGrid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 50px; color: #666;">
+                        <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 20px; color: var(--gray-color);"></i>
+                        <h3 style="color: var(--dark-color); margin-bottom: 10px;">لم يتم العثور على وصفات</h3>
+                        <p>جرب تغيير مصطلحات البحث أو إضافة مكونات مختلفة</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            recipesToDisplay.forEach(recipe => {
+                const recipeCard = document.createElement('div');
+                recipeCard.className = 'recipe-card';
+                recipeCard.innerHTML = `
+                    <div class="recipe-badge">${recipe.category.includes('arabic') ? 'عربي' : 'عالمي'}</div>
+                    <div class="recipe-image" style="background-image: url('${recipe.image}')"></div>
+                    <div class="recipe-content">
+                        <h3 class="recipe-title">${recipe.name}</h3>
+                        <div class="recipe-meta">
+                            <span><i class="far fa-clock"></i> ${recipe.time}</span>
+                            <span><i class="fas fa-fire"></i> ${recipe.calories}</span>
+                            <span><i class="fas fa-signal"></i> ${recipe.difficulty}</span>
+                        </div>
+                        <p class="recipe-ingredients"><strong>أهم المكونات:</strong> ${recipe.ingredients.slice(0, 3).join(', ')}${recipe.ingredients.length > 3 ? '...' : ''}</p>
+                        <div class="recipe-actions">
+                            <button class="recipe-btn view-recipe" data-id="${recipe.id}"><i class="fas fa-book-open"></i> طريقة التحضير</button>
+                            <button class="favorite-btn"><i class="far fa-heart"></i> حفظ</button>
+                        </div>
+                    </div>
+                `;
+                recipesGrid.appendChild(recipeCard);
+            });
+
+            // Add event listeners to view recipe buttons
+            document.querySelectorAll('.view-recipe').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const recipeId = parseInt(e.target.closest('button').dataset.id);
+                    viewRecipeDetails(recipeId);
+                });
+            });
+
+            // Add event listeners to favorite buttons
+            document.querySelectorAll('.favorite-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const heartIcon = e.target.querySelector('i') || e.target;
+                    if (heartIcon.classList.contains('far')) {
+                        heartIcon.classList.remove('far');
+                        heartIcon.classList.add('fas');
+                        e.target.closest('button').innerHTML = '<i class="fas fa-heart"></i> محفوظة';
+                        e.target.closest('button').style.backgroundColor = 'var(--accent-color)';
+                        e.target.closest('button').style.color = 'var(--dark-color)';
+                        e.target.closest('button').style.borderColor = 'var(--accent-color)';
+                        
+                        // Find recipe name
+                        const recipeName = e.target.closest('.recipe-card').querySelector('.recipe-title').textContent;
+                        addMessageToChat(`تم حفظ وصفة "${recipeName}" في المفضلة`, 'ai');
+                    } else {
+                        heartIcon.classList.remove('fas');
+                        heartIcon.classList.add('far');
+                        e.target.closest('button').innerHTML = '<i class="far fa-heart"></i> حفظ';
+                        e.target.closest('button').style.backgroundColor = 'transparent';
+                        e.target.closest('button').style.color = 'var(--dark-color)';
+                        e.target.closest('button').style.borderColor = 'var(--accent-color)';
+                        
+                        // Find recipe name
+                        const recipeName = e.target.closest('.recipe-card').querySelector('.recipe-title').textContent;
+                        addMessageToChat(`تم إزالة وصفة "${recipeName}" من المفضلة`, 'ai');
+                    }
+                });
+            });
+        }
+
+        // View recipe details
+        function viewRecipeDetails(recipeId) {
+            const recipe = recipes.find(r => r.id === recipeId);
+            if (!recipe) return;
+            
+            // Create modal for recipe details
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0,0,0,0.85);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 2000;
+                padding: 20px;
+                animation: fadeIn 0.3s ease;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background-color: white; border-radius: 20px; max-width: 900px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative;">
+                    <button class="close-modal" style="position: absolute; top: 20px; left: 20px; background-color: var(--primary-color); color: white; border: none; width: 45px; height: 45px; border-radius: 50%; font-size: 1.8rem; cursor: pointer; z-index: 10; display: flex; align-items: center; justify-content: center;">×</button>
+                    
+                    <div style="height: 350px; background-image: url('${recipe.image}'); background-size: cover; background-position: center; border-radius: 20px 20px 0 0; position: relative;">
+                        <div style="position: absolute; bottom: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); width: 100%; padding: 30px; color: white;">
+                            <h2 style="font-size: 2.5rem; margin-bottom: 10px;">${recipe.name}</h2>
+                            <div style="display: flex; gap: 25px;">
+                                <span><i class="far fa-clock"></i> ${recipe.time}</span>
+                                <span><i class="fas fa-fire"></i> ${recipe.calories}</span>
+                                <span><i class="fas fa-signal"></i> ${recipe.difficulty}</span>
+                                <span><i class="fas fa-tag"></i> ${recipe.category.map(cat => {
+                                    const categories = {
+                                        'arabic': 'عربي',
+                                        'main': 'طبق رئيسي',
+                                        'appetizer': 'مقبلات',
+                                        'dessert': 'حلويات',
+                                        'salad': 'سلطة',
+                                        'breakfast': 'إفطار',
+                                        'healthy': 'صحي',
+                                        'fast': 'سريع'
+                                    };
+                                    return categories[cat];
+                                }).join(', ')}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="padding: 40px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px;">
+                            <div>
+                                <h3 style="color: var(--dark-color); font-size: 1.8rem; margin-bottom: 20px; border-bottom: 2px solid var(--accent-color); padding-bottom: 10px;">المكونات</h3>
+                                <ul style="list-style: none; padding-right: 20px;">
+                                    ${recipe.ingredients.map(ing => `<li style="margin-bottom: 12px; padding-right: 10px; position: relative;"><i class="fas fa-check-circle" style="color: var(--success-color); position: absolute; right: -20px; top: 5px;"></i> ${ing}</li>`).join('')}
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 style="color: var(--dark-color); font-size: 1.8rem; margin-bottom: 20px; border-bottom: 2px solid var(--accent-color); padding-bottom: 10px;">طريقة التحضير</h3>
+                                <div style="white-space: pre-line; line-height: 1.8;">${recipe.instructions}</div>
+                            </div>
+                        </div>
+                        
+                        <div style="background-color: #f8f9fa; padding: 25px; border-radius: 12px; border-right: 4px solid var(--accent-color);">
+                            <h4 style="color: var(--dark-color); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;"><i class="fas fa-info-circle"></i> معلومات عن الوصفة</h4>
+                            <p>مصدر الوصفة: <strong>${recipe.source}</strong></p>
+                            <p>يمكنك تعديل الوصفة حسب ذوقك وإضافة أو تقليل بعض المكونات.</p>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 40px;">
+                            <button class="recipe-btn" id="closeModalBtn" style="padding: 15px 40px; font-size: 1.1rem; background-color: var(--secondary-color);">
+                                <i class="fas fa-times"></i> إغلاق
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            document.body.style.overflow = 'hidden';
+            
+            // Close modal events
+            modal.querySelector('.close-modal').addEventListener('click', () => {
+                document.body.removeChild(modal);
+                document.body.style.overflow = 'auto';
+            });
+            
+            modal.querySelector('#closeModalBtn').addEventListener('click', () => {
+                document.body.removeChild(modal);
+                document.body.style.overflow = 'auto';
+            });
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    document.body.removeChild(modal);
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+
+        // Initialize the app when page loads
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
